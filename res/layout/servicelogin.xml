@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="fill_parent" 
+	android:layout_height="wrap_content">
+    <ImageView android:src="@drawable/r2adcloud" android:id="@+id/imageView1" 
+        android:adjustViewBounds="true" android:layout_gravity="center_horizontal" 
+        android:layout_marginTop="25dip"
+        android:layout_width="match_parent" android:layout_height="60dip"></ImageView>
+	<TextView android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:layout_marginTop="5dip" 
+		android:layout_marginLeft="22dip"
+		android:text="@string/service_url"></TextView>
+	<EditText android:layout_width="fill_parent" 
+	    android:layout_marginLeft="22dip" android:layout_marginRight="30dip"
+	    android:text="Cloud URL" 
+	    android:autoText="true" 
+	    android:inputType="textUri" android:layout_height="40dip" android:id="@+id/servicetexturl"></EditText>
+	<TextView android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:layout_marginTop="5dip" 
+		android:layout_marginLeft="22dip"
+		android:text="@string/servicetype"></TextView>
+	<Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" 
+	    android:id="@+id/serviceTypeSpinner"
+	    android:layout_marginLeft="22dip" android:layout_marginRight="30dip"></Spinner>
+	<TextView android:layout_width="match_parent" android:text="@string/username" 
+	    android:id="@+id/textViewUserId" android:layout_height="wrap_content" 
+	    android:layout_marginLeft="22dip"></TextView>
+	<EditText android:layout_width="fill_parent" 
+	    android:layout_marginLeft="22dip" android:layout_marginRight="30dip"
+	    android:text="" 
+	    android:id="@+id/serviceUserId" android:layout_height="40dip"></EditText>
+
+	<TextView android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:layout_marginLeft="22dip"
+		android:text="@string/apikey" />
+	<EditText android:id="@+id/serviceAPIKey"
+		android:layout_width="fill_parent"
+		android:layout_marginLeft="22dip" android:layout_marginRight="30dip"
+		android:scrollHorizontally="true" android:autoText="false"
+		android:capitalize="none" android:gravity="fill_horizontal"
+		android:singleLine="true" android:imeOptions="actionGo"
+		android:inputType="textNoSuggestions" android:password="true"
+		android:textAppearance="?android:attr/textAppearanceMedium" android:layout_height="40dip"/>		
+
+	<LinearLayout android:orientation="horizontal"
+		android:layout_width="fill_parent" android:layout_height="fill_parent">
+		<Button android:layout_width="100dip" android:layout_gravity="left" android:text="@string/login" 
+		    android:layout_marginLeft="20dip" android:layout_marginTop="10dip" 
+		    android:layout_height="40dip" android:id="@+id/buttonservicelogin"></Button><!-- TODO -->
+		<CheckBox android:layout_width="wrap_content" android:text="Show Key" android:id="@+id/servicePassBox" android:layout_height="40dip"></CheckBox>
+		<ProgressBar android:id="@+id/serviceLoginProgressbar" android:layout_height="48dp" android:layout_width="48dp" style="?android:attr/progressBarStyleLarge"></ProgressBar>
+
+	</LinearLayout>
+	<TextView android:text="@string/authenticating" android:id="@+id/serviceLoginAuthenticatingLabel" android:layout_height="wrap_content" android:layout_marginLeft="172dip" android:layout_width="fill_parent" android:textAppearance="?android:attr/textAppearanceMedium" android:layout_marginTop="-28dip" android:visibility="invisible"></TextView>
+
+</LinearLayout>
+
+<!-- android:layout_height="wrap_content" -->

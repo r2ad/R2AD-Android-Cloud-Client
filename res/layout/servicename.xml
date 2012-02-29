@@ -1,0 +1,79 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/view_storage_layout"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+<TextView android:id="@+id/finalservicenameview" android:layout_width="fill_parent" 
+    android:layout_height="wrap_content" 
+    android:layout_marginLeft="10dip" 
+    android:layout_marginTop="15dip"
+    android:layout_marginRight="10dip"     
+    android:textAppearance="?android:attr/textAppearanceMedium"></TextView>
+<TextView  
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="10dip" 
+    android:layout_marginTop="15dip"
+    android:layout_marginRight="10dip" 
+    android:singleLine="false"
+    android:text="Service Name"/>
+<EditText android:layout_width="match_parent" 
+    android:layout_height="wrap_content" 
+    android:layout_marginLeft="22dip" android:layout_marginRight="30dip" android:id="@+id/finalservicenamefield">
+    <requestFocus></requestFocus>
+</EditText>
+    
+<!-- Operating System -->
+<TextView  
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="10dip" 
+    android:layout_marginTop="15dip"
+    android:layout_marginRight="10dip" 
+    android:singleLine="false" android:text="Service URL"/>
+<TextView android:layout_height="wrap_content"
+    android:layout_width="fill_parent"
+    android:layout_marginLeft="10dip"
+    android:layout_marginRight="30dip"
+    android:layout_marginTop="5dip"
+    android:scrollHorizontally="true"
+    android:gravity="fill_horizontal"
+    android:textStyle="bold"
+    android:textSize="20.0sp"
+    android:textColor="#fff" android:id="@+id/finalserviceurl"/>
+
+<!-- Memory -->
+<TextView  
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="10dip" 
+    android:layout_marginTop="15dip"
+    android:layout_marginRight="10dip" 
+    android:singleLine="false"
+    android:text="Service Type"/>
+<TextView android:layout_height="wrap_content"
+    android:layout_width="fill_parent"
+    android:layout_marginLeft="10dip"
+    android:layout_marginRight="30dip"
+    android:layout_marginTop="5dip"
+    android:scrollHorizontally="true"
+    android:gravity="fill_horizontal"
+    android:textStyle="bold"
+    android:textSize="20.0sp"
+    android:textColor="#fff" android:id="@+id/finalservicetype"/>
+
+<!-- Disk -->
+<RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:id="@+id/relativeLayout1">
+    <Button android:layout_width="100dip" android:layout_height="wrap_content" android:layout_alignParentTop="true" android:layout_centerHorizontal="true" android:text="Finish" android:id="@+id/finalservicebutton"></Button>
+</RelativeLayout>   
+</LinearLayout>
+    
+<!--
+    android:layout_height="wrap_content"
+ -->
+ </ScrollView>
+

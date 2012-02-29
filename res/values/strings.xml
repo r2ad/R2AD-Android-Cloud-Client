@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Cloud Client for Android</string>
+    <string name="menu_add_service">Add Service</string>
+    <string name="menu_delete_service">Delete Service</string>
+    <string name="authenticating">Authenticating Login</string>
+    <string name="login">Ok</string>
+    <string name="service_url">Service URL:</string>
+    <string name="show_credentials">Show Key</string>
+    <string name="username">User Name:</string>
+    <string name="apikey">User Key:</string>
+    <string name="fields_missing">Fields Missing</string>
+    <string name="username_and_apikey_required">User Name and API Key are required.</string>
+    <string name="ok">OK</string>
+    <string-array name="country_entries">
+        <item>US</item>
+        <item>UK</item>
+    </string-array>
+    <string-array name="country_values">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+    <string name="country_default_value">0</string>
+    <string name="preference_name">Preferences</string>
+    <string name="servicetype">Service Target</string>
+    <string name="cancelbutton">Cancel</string>
+    <string name="nextbutton">Next</string>	
+</resources>

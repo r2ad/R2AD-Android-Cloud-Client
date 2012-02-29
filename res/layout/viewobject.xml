@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/view_server_layout"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+
+<!-- Container Name - Setting top margin to -700 so it will sit over the OS logo image -->
+<TextView  
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="22dip" 
+    android:layout_marginTop="20dip"
+    android:text="Container Name"
+    android:singleLine="false"
+    />
+<TextView android:id="@+id/view_container_name"
+    android:layout_height="wrap_content"
+    android:layout_width="fill_parent"
+    android:layout_marginLeft="22dip"
+    android:layout_marginRight="30dip"
+    android:scrollHorizontally="true"
+    android:gravity="fill_horizontal"
+    android:textStyle="bold"
+    android:textSize="20.0sp"
+    android:textColor="#fff"
+    android:layout_marginBottom="15dip"
+    />
+    
+<!-- File Size  -->
+<TextView  
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="22dip" 
+    android:text="File Size "
+    android:singleLine="false"
+    />
+<TextView android:id="@+id/view_file_bytes"
+    android:layout_height="wrap_content"
+    android:layout_width="fill_parent"
+    android:layout_marginLeft="22dip"
+    android:layout_marginRight="30dip"
+    android:scrollHorizontally="true"
+    android:gravity="fill_horizontal"
+    android:textStyle="bold"
+    android:textSize="20.0sp"
+    android:textColor="#fff"
+    android:layout_marginBottom="15dip"
+    />
+    
+<!-- Content Type -->
+<TextView  
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="22dip" 
+    android:text="Content Type"
+    android:singleLine="false"
+    />
+<TextView android:id="@+id/view_content_type"
+    android:layout_height="wrap_content"
+    android:layout_width="fill_parent"
+    android:layout_marginLeft="22dip"
+    android:layout_marginRight="30dip"
+    android:scrollHorizontally="true"
+    android:gravity="fill_horizontal"
+    android:textStyle="bold"
+    android:textSize="20.0sp"
+    android:textColor="#fff"
+    android:layout_marginBottom="15dip"
+    />
+
+<!-- Last Modification  -->
+<TextView  
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="22dip" 
+    android:text="Last Modification Date"
+    android:singleLine="false"
+    />
+<TextView android:id="@+id/view_file_modification"
+    android:layout_height="wrap_content"
+    android:layout_width="fill_parent"
+    android:layout_marginLeft="22dip"
+    android:layout_marginRight="30dip"
+    android:scrollHorizontally="true"
+    android:gravity="fill_horizontal"
+    android:textStyle="bold"
+    android:textSize="20.0sp"
+    android:textColor="#fff"
+    android:layout_marginBottom="15dip"
+    />
+ <!-- Preview Button --> 
+    <Button xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/preview_button"
+    android:text="Preview File"
+    android:layout_width="100dip"
+    android:layout_height="wrap_content"
+    android:layout_gravity="left"
+    android:layout_marginLeft="20dip"
+    android:layout_marginTop="10dip"
+    />
+	</LinearLayout>
+
+ </ScrollView>

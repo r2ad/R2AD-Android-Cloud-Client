@@ -1,0 +1,178 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/view_server_layout"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+<TextView  
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="10dip" 
+    android:layout_marginTop="15dip"
+    android:layout_marginRight="10dip" 
+    android:text="Computer Name"
+    android:singleLine="false"
+    />
+<TextView android:id="@+id/view_server_name"
+    android:layout_height="wrap_content"
+    android:layout_width="fill_parent"
+    android:layout_marginTop="5dip"
+    android:layout_marginLeft="10dip"
+    android:layout_marginRight="30dip"
+    android:scrollHorizontally="true"
+    android:gravity="fill_horizontal"
+    android:textStyle="bold"
+    android:textSize="20.0sp"
+    android:textColor="#fff"
+    />
+    
+<!-- Operating System -->
+<TextView  
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="10dip" 
+    android:layout_marginTop="15dip"
+    android:layout_marginRight="10dip" 
+    android:text="Architecture"
+    android:singleLine="false"
+    />
+<TextView android:id="@+id/viewarch"
+    android:layout_height="wrap_content"
+    android:layout_width="fill_parent"
+    android:layout_marginLeft="10dip"
+    android:layout_marginRight="30dip"
+    android:layout_marginTop="5dip"
+    android:scrollHorizontally="true"
+    android:gravity="fill_horizontal"
+    android:textStyle="bold"
+    android:textSize="20.0sp"
+    android:textColor="#fff"
+    />
+
+<!-- Memory -->
+<TextView  
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="10dip" 
+    android:layout_marginTop="15dip"
+    android:layout_marginRight="10dip" 
+    android:text="Memory"
+    android:singleLine="false"
+    />
+<TextView android:id="@+id/viewmemory"
+    android:layout_height="wrap_content"
+    android:layout_width="fill_parent"
+    android:layout_marginLeft="10dip"
+    android:layout_marginRight="30dip"
+    android:layout_marginTop="5dip"
+    android:scrollHorizontally="true"
+    android:gravity="fill_horizontal"
+    android:textStyle="bold"
+    android:textSize="20.0sp"
+    android:textColor="#fff"
+    />
+
+<!-- Disk -->
+<TextView  
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="10dip" 
+    android:layout_marginTop="15dip"
+    android:layout_marginRight="10dip" 
+    android:text="Cores"
+    android:singleLine="false"
+    />
+<TextView android:id="@+id/corestate"
+    android:layout_height="wrap_content"
+    android:layout_width="fill_parent"
+    android:layout_marginLeft="10dip"
+    android:layout_marginRight="30dip"
+    android:layout_marginTop="5dip"
+    android:scrollHorizontally="true"
+    android:gravity="fill_horizontal"
+    android:textStyle="bold"
+    android:textSize="20.0sp"
+    android:textColor="#fff"
+    />
+
+<!-- Status -->
+<TextView  
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="10dip" 
+    android:layout_marginRight="10dip" 
+    android:layout_marginTop="15dip"
+    android:text="Status"
+    android:singleLine="false"
+    />
+<TextView android:id="@+id/viewstatus"
+    android:layout_height="wrap_content"
+    android:layout_width="fill_parent"
+    android:layout_marginLeft="10dip"
+    android:layout_marginRight="30dip"
+    android:layout_marginTop="5dip"
+    android:scrollHorizontally="true"
+    android:gravity="fill_horizontal"
+    android:textStyle="bold"
+    android:textSize="20.0sp"
+    android:textColor="#fff"
+    />
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="10dip"
+        >
+        <Button xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/editcomputerbutton"
+            android:text="Modify"
+            android:layout_width="130dip"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginLeft="20dip"
+            android:layout_marginTop="10dip"
+            />
+        
+        <Button xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/deletecomputerbutton"
+            android:text="Delete"
+            android:layout_width="130dip"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginLeft="10dip"
+            android:layout_marginTop="10dip"
+            />
+    </LinearLayout>    
+    <!-- >Button 
+      android:id="@+id/editcomputerbutton"
+      android:text="Modify Computer"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:layout_gravity="left"
+      android:layout_marginLeft="10dip"
+      android:layout_marginRight="10dip"
+      android:layout_marginTop="10dip"
+    /-->       
+<!-- Actions -->
+<!-->TextView  
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="10dip" 
+    android:layout_marginRight="10dip" 
+    android:layout_marginTop="15dip"
+    android:text="Actions"
+    android:singleLine="false"
+    android:background="#A9A9A9"
+    android:textColor="#000000"
+    android:shadowColor="#A9A9A9"
+    android:shadowRadius="3"    
+    /-->    
+</LinearLayout>
+    
+<!--
+    android:layout_height="wrap_content"
+ -->
+ </ScrollView>

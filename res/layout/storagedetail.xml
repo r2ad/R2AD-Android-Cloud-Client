@@ -1,0 +1,130 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/view_storage_layout"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+<TextView  
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="10dip" 
+    android:layout_marginTop="15dip"
+    android:layout_marginRight="10dip" 
+    android:text="Storage Name"
+    android:singleLine="false"
+    />
+<TextView android:id="@+id/view_storage_name"
+    android:layout_height="wrap_content"
+    android:layout_width="fill_parent"
+    android:layout_marginTop="5dip"
+    android:layout_marginLeft="10dip"
+    android:layout_marginRight="30dip"
+    android:scrollHorizontally="true"
+    android:gravity="fill_horizontal"
+    android:textStyle="bold"
+    android:textSize="20.0sp"
+    android:textColor="#fff"
+    />
+    
+<!-- Operating System -->
+<TextView  
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="10dip" 
+    android:layout_marginTop="15dip"
+    android:layout_marginRight="10dip" 
+    android:text="Summary"
+    android:singleLine="false"
+    />
+<TextView android:id="@+id/storagesummary"
+    android:layout_height="wrap_content"
+    android:layout_width="fill_parent"
+    android:layout_marginLeft="10dip"
+    android:layout_marginRight="30dip"
+    android:layout_marginTop="5dip"
+    android:scrollHorizontally="true"
+    android:gravity="fill_horizontal"
+    android:textStyle="bold"
+    android:textSize="20.0sp"
+    android:textColor="#fff"
+    />
+
+<!-- Memory -->
+<TextView  
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="10dip" 
+    android:layout_marginTop="15dip"
+    android:layout_marginRight="10dip" 
+    android:text="Size"
+    android:singleLine="false"
+    />
+<TextView android:id="@+id/storagesize"
+    android:layout_height="wrap_content"
+    android:layout_width="fill_parent"
+    android:layout_marginLeft="10dip"
+    android:layout_marginRight="30dip"
+    android:layout_marginTop="5dip"
+    android:scrollHorizontally="true"
+    android:gravity="fill_horizontal"
+    android:textStyle="bold"
+    android:textSize="20.0sp"
+    android:textColor="#fff"
+    />
+
+<!-- Disk -->
+<TextView  
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="10dip" 
+    android:layout_marginTop="15dip"
+    android:layout_marginRight="10dip" 
+    android:text="State"
+    android:singleLine="false"
+    />
+<TextView android:id="@+id/storagestate"
+    android:layout_height="wrap_content"
+    android:layout_width="fill_parent"
+    android:layout_marginLeft="10dip"
+    android:layout_marginRight="30dip"
+    android:layout_marginTop="5dip"
+    android:scrollHorizontally="true"
+    android:gravity="fill_horizontal"
+    android:textStyle="bold"
+    android:textSize="20.0sp"
+    android:textColor="#fff"
+    />
+
+<!-- Public IP Addresses -->
+<!-- TextView  
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="10dip" 
+    android:layout_marginRight="10dip" 
+    android:layout_marginTop="15dip"
+    android:text="Links"
+    android:singleLine="false"
+    android:background="#A9A9A9"
+    android:textColor="#000000"
+    android:shadowColor="#A9A9A9"
+    android:shadowRadius="3"    
+    /-->    
+<Button 
+    android:id="@+id/storageactionbutton"
+    android:text="Storage Actions"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="left"
+    android:layout_marginLeft="10dip"
+    android:layout_marginRight="10dip"
+    android:layout_marginTop="10dip"
+    />   
+</LinearLayout>
+    
+<!--
+    android:layout_height="wrap_content"
+ -->
+ </ScrollView>

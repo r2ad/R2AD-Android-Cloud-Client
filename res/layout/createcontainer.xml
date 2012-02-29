@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+
+<TextView  
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="22dip" 
+    android:text="Container Name"
+    />
+<EditText android:id="@+id/container_name"
+    android:layout_height="wrap_content"
+    android:layout_width="fill_parent"
+    android:layout_marginLeft="22dip"
+    android:layout_marginRight="30dip"
+    android:scrollHorizontally="true"
+    android:autoText="false"
+    android:capitalize="none"
+    android:gravity="fill_horizontal"
+    android:singleLine="true"
+    android:inputType="textNoSuggestions"
+    android:imeOptions="actionNext"
+    android:textAppearance="?android:attr/textAppearanceMedium" 
+    />
+<Button xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/save_button"
+    android:text="Save"
+    android:layout_width="100dip"
+    android:layout_height="wrap_content"
+    android:layout_gravity="left"
+    android:layout_marginLeft="20dip"
+    android:layout_marginTop="10dip"
+    />
+
+<ProgressBar android:id="@+id/save_container_progress_bar" 
+    android:layout_width="30dip" 
+    android:layout_height="30dip"
+    android:layout_marginLeft="130dip"
+    android:layout_marginTop="-42dip"
+    android:visibility="invisible"
+    />
+    
+<TextView android:id="@+id/saving_container_label"
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="172dip"
+    android:layout_marginTop="-28dip"
+    android:visibility="invisible"
+    android:textAppearance="?android:attr/textAppearanceMedium"
+    android:text="Saving..."
+    />
+</LinearLayout>

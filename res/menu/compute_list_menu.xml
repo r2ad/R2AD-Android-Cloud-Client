@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+   <item android:id="@+id/add_computer" android:title="Add Computer" android:icon="@drawable/add_button" />   
+   <item android:id="@+id/refresh" android:title="Refresh" android:icon="@drawable/refresh_button" />
+</menu>

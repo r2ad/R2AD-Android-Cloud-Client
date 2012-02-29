@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+   <item android:id="@+id/editcomputer" android:title="Edit Settings" android:icon="@drawable/settings_button" />   
+   <item android:id="@+id/deletecomputer" android:title="Delete Computer" android:icon="@drawable/refresh_button" />   
+</menu>

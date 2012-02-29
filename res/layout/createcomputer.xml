@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+<TextView  
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="22dip" 
+    android:text="Computer Name"
+    />
+<EditText android:id="@+id/server_name"
+    android:layout_width="fill_parent"
+    android:layout_marginLeft="22dip"
+    android:layout_marginRight="30dip"
+    android:scrollHorizontally="true"
+    android:autoText="false"
+    android:capitalize="none"
+    android:gravity="fill_horizontal"
+    android:singleLine="true"
+    android:inputType="textNoSuggestions"
+    android:imeOptions="actionNext"
+    android:textAppearance="?android:attr/textAppearanceMedium" 
+    android:layout_height="40dip"/>
+
+<TextView  
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="22dip" 
+    android:text="Architecture"
+    />
+<Spinner xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/archspinner"
+    android:layout_width="fill_parent" 
+    android:drawSelectorOnTop="true"
+    android:layout_marginLeft="22dip"
+    android:layout_marginRight="30dip" android:layout_height="wrap_content"/>
+<TextView  
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="22dip" 
+    android:text="Cores"
+    />
+<Spinner xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/corespinner"
+    android:layout_width="fill_parent" 
+    android:drawSelectorOnTop="true"
+    android:layout_marginLeft="22dip"
+    android:layout_marginRight="30dip" android:layout_height="wrap_content"/>
+    
+<TextView  
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="22dip" 
+    android:text="State"
+    />
+<Spinner xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/statespinner"
+    android:layout_width="fill_parent" 
+    android:drawSelectorOnTop="true"
+    android:layout_marginLeft="22dip"
+    android:layout_marginRight="30dip" android:layout_height="wrap_content"/>    
+    
+<TextView android:text="Memory 0 GB" android:id="@+id/memoryText" 
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="22dip"></TextView>
+    
+<SeekBar android:layout_height="wrap_content" 
+    android:id="@+id/memorySeek" 
+    android:layout_marginLeft="22dip"
+    android:layout_marginRight="30dip"
+    android:layout_width="match_parent"></SeekBar>
+
+<Button xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/save_button"
+    android:text="Save"
+    android:layout_width="100dip"
+    android:layout_height="wrap_content"
+    android:layout_gravity="left"
+    android:layout_marginLeft="20dip"
+    android:layout_marginTop="10dip"
+    />
+
+<ProgressBar android:id="@+id/save_server_progress_bar" 
+    android:layout_width="30dip" 
+    android:layout_height="30dip"
+    android:layout_marginLeft="130dip"
+    android:layout_marginTop="-42dip"
+    android:visibility="invisible"
+    />
+    
+<TextView android:id="@+id/saving_server_label"
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="172dip"
+    android:layout_marginTop="-28dip"
+    android:visibility="invisible"
+    android:textAppearance="?android:attr/textAppearanceMedium"
+    android:text="Saving..."
+    />
+</LinearLayout>
+
+<!--
+    android:layout_height="wrap_content"
+ -->
