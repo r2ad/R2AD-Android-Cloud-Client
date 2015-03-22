@@ -15,6 +15,8 @@ package com.r2ad.security.utils;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 
+import android.util.Base64;
+
 /**
 * This is a support class to support security encodings, specifically Basic Authentication.
 * It may be needed in cases where the standard HTTP classes are not sufficient.
@@ -42,4 +44,71 @@ public class Encoder {
            return toSign;
        }
    }
+   
+   // SEE: http://httpd.apache.org/docs/trunk/misc/password_encryptions.html
+   
+   /**
+    * Return a MD5 hash on a SHA1 signed string.
+    * @param toSign the input cleartext string
+    */
+   public static String B64SHA(String toSign) {
+       MessageDigest digest = null;
+       try {
+           digest = MessageDigest.getInstance("SHA1");
+       } catch (Exception e) {
+           //System.out.println("Exception: " +e );
+       }
+       // Hopefully SHA1 exists.  If not just return unsigned string.
+       if (digest != null) {
+           digest.update(toSign.getBytes());
+           byte[] hashed = digest.digest();
+           // base64 encode:
+           String base64 = Base64.encodeToString(hashed, Base64.DEFAULT);
+           return base64;
+       } else {
+           return toSign;
+       }
+   }
+	   
+   
+   public static String  Base64Encode(String source) {
+	    final String base64chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+	 
+        // the result/encoded string, the padding string, and the pad count
+        String r = "", p = "";
+        int c = source.length() % 3;
+ 
+        // add a right zero pad to make this string a multiple of 3 characters
+        if (c > 0) {
+            for (; c < 3; c++) {
+                p += "=";
+                source += "\0";
+            }
+        }
+ 
+        // increment over the length of the string, three characters at a time
+        for (c = 0; c < source.length(); c += 3) {
+ 
+            // we add newlines after every 76 output characters, according to
+            // the MIME specs
+            if (c > 0 && (c / 3 * 4) % 76 == 0)
+                r += "\r\n";
+ 
+            // these three 8-bit (ASCII) characters become one 24-bit number
+            int n = (source.charAt(c) << 16) + (source.charAt(c + 1) << 8)
+                    + (source.charAt(c + 2));
+ 
+            // this 24-bit number gets separated into four 6-bit numbers
+            int n1 = (n >> 18) & 63, n2 = (n >> 12) & 63, n3 = (n >> 6) & 63, n4 = n & 63;
+ 
+            // those four 6-bit numbers are used as indices into the base64
+            // character list
+            r += "" + base64chars.charAt(n1) + base64chars.charAt(n2)
+                    + base64chars.charAt(n3) + base64chars.charAt(n4);
+        }
+ 
+        return r.substring(0, r.length() - p.length()) + p;
+	}   
+   
+   
 }

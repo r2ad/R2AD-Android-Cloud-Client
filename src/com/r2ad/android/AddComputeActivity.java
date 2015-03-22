@@ -198,7 +198,7 @@ public class AddComputeActivity extends Activity implements SeekBar.OnSeekBarCha
 		AlertDialog alert = new AlertDialog.Builder(this).create();
 		alert.setTitle(title);
 		alert.setMessage(message);
-		alert.setButton("OK", new DialogInterface.OnClickListener() {
+		alert.setButton("OK",  new DialogInterface.OnClickListener()  {
 	      public void onClick(DialogInterface dialog, int which) {
 	        return;
 	    } }); 

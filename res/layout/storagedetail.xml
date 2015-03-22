@@ -1,21 +1,22 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
     android:id="@+id/view_storage_layout"
     android:orientation="vertical"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    >
-<TextView  
-    android:layout_width="fill_parent" 
     android:layout_height="wrap_content"
-    android:layout_marginLeft="10dip" 
+    >
+
+<TextView
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="10dip"
+    android:layout_marginRight="10dip"
     android:layout_marginTop="15dip"
-    android:layout_marginRight="10dip" 
-    android:text="Storage Name"
     android:singleLine="false"
-    />
+    android:text="@string/storageName" />
+
 <TextView android:id="@+id/view_storage_name"
     android:layout_height="wrap_content"
     android:layout_width="fill_parent"
@@ -30,15 +31,16 @@
     />
     
 <!-- Operating System -->
-<TextView  
-    android:layout_width="fill_parent" 
+
+<TextView
+    android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="10dip" 
+    android:layout_marginLeft="10dip"
+    android:layout_marginRight="10dip"
     android:layout_marginTop="15dip"
-    android:layout_marginRight="10dip" 
-    android:text="Summary"
     android:singleLine="false"
-    />
+    android:text="@string/summary" />
+
 <TextView android:id="@+id/storagesummary"
     android:layout_height="wrap_content"
     android:layout_width="fill_parent"
@@ -53,15 +55,16 @@
     />
 
 <!-- Memory -->
-<TextView  
-    android:layout_width="fill_parent" 
+
+<TextView
+    android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="10dip" 
+    android:layout_marginLeft="10dip"
+    android:layout_marginRight="10dip"
     android:layout_marginTop="15dip"
-    android:layout_marginRight="10dip" 
-    android:text="Size"
     android:singleLine="false"
-    />
+    android:text="@string/size" />
+
 <TextView android:id="@+id/storagesize"
     android:layout_height="wrap_content"
     android:layout_width="fill_parent"
@@ -76,15 +79,16 @@
     />
 
 <!-- Disk -->
-<TextView  
-    android:layout_width="fill_parent" 
+
+<TextView
+    android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="10dip" 
+    android:layout_marginLeft="10dip"
+    android:layout_marginRight="10dip"
     android:layout_marginTop="15dip"
-    android:layout_marginRight="10dip" 
-    android:text="State"
     android:singleLine="false"
-    />
+    android:text="@string/state" />
+
 <TextView android:id="@+id/storagestate"
     android:layout_height="wrap_content"
     android:layout_width="fill_parent"
@@ -113,8 +117,8 @@
     android:shadowRadius="3"    
     /-->    
 <Button 
-    android:id="@+id/storageactionbutton"
-    android:text="Storage Actions"
+    android:id="@+id/stopbutton"
+    android:text="@string/storageActions"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="left"

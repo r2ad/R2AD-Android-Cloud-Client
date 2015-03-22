@@ -44,6 +44,8 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 
 public class ServicesListActivity extends ListActivity {
 
+// TODO: Add an Edit URL feature.
+	
 	private static final String TAG = "ServicesListActivity";
     private static final int DELETE_ID = Menu.FIRST + 1;
     private static final int SETTINGS_ID = Menu.FIRST + 2;
@@ -297,7 +299,7 @@ public class ServicesListActivity extends ListActivity {
 			TextView label = (TextView) row.findViewById(R.id.label);
 			label.setText(service.getName());			
 			TextView sublabel = (TextView) row.findViewById(R.id.sublabel);
-			sublabel.setText("Local Cloud Host"); //service.getURL());
+			sublabel.setText(service.getURL());
 			return(row);
 		}
 	}

@@ -14,17 +14,32 @@ package com.r2ad.cloud.occi;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.security.KeyStore;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpVersion;
+import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.conn.ClientConnectionManager;
+import org.apache.http.conn.scheme.PlainSocketFactory;
+import org.apache.http.conn.scheme.Scheme;
+import org.apache.http.conn.scheme.SchemeRegistry;
+import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpParams;
+import org.apache.http.params.HttpProtocolParams;
+import org.apache.http.protocol.HTTP;
 
+import android.content.Context;
 import android.util.Log;
 
+import com.r2ad.security.utils.MySSLSocketFactory;
 import com.r2ad.cloud.model.CloudComputeType;
 
 /**
- * CloudComputer represnts an OCCI compute resource.  This class provide methods
+ * CloudComputer represents an OCCI compute resource.  This class provide methods
  * to create and update and compute resource.
  * @author behrens, moolenaar
  *
@@ -36,6 +51,14 @@ public class CloudComputer {
 	private CloudComputeType m_Compute;
 	private boolean			parsedComputers;
 	static String TAG = "CloudComputer-->";
+	
+	// Extra values that may or may not be needed:
+	static final String keystoreFilename = "keystore.android";
+	KeyStore trustStore = null;
+	SSLSocketFactory socketFactory = null;
+	Context context = null;
+	String  urlEncodedAccount = "YWNjb3JkczpwbGF0Zm9ybQ=="; // previous to plugfest 2013
+
 
 	/**
 	 * Create a CloudComputer instance with minimum required arguments to be valid.
@@ -47,19 +70,53 @@ public class CloudComputer {
 		this.m_url = url;
 	}	
 	
+    public HttpClient getNewHttpClient() {
+        try {
+            KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
+            trustStore.load(null, null);
+
+            SSLSocketFactory sf = new MySSLSocketFactory(trustStore);
+            sf.setHostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
+
+            HttpParams params = new BasicHttpParams();
+            HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
+            HttpProtocolParams.setContentCharset(params, HTTP.UTF_8);
+
+            SchemeRegistry registry = new SchemeRegistry();
+            registry.register(new Scheme("http", PlainSocketFactory.getSocketFactory(), 80));
+            registry.register(new Scheme("https", sf, 443));
+            registry.register(new Scheme("https", sf, 8094));
+
+            ClientConnectionManager ccm = new ThreadSafeClientConnManager(params, registry);
+
+            return new DefaultHttpClient(ccm, params);
+        } catch (Exception e) {
+            return new DefaultHttpClient();
+        }
+    }	
+	
 	/** 
-	 * This sends an OCCI complaint POST command to create a resource.
+	 * This sends an OCCI compliant POST command to create a resource.
 	 */
 	private HttpResponse sendCreateComputer() {
 		HttpResponse result = null;
         Log.i(TAG,"sendCreateComputer to:  "+ m_url);
 		
-		try {			
-			DefaultHttpClient httpclient = new DefaultHttpClient();
+		try {
+			//
+			// Use this client instead of default one! June 2013
+			//
+			HttpClient httpclient = getNewHttpClient();
 			HttpPost verb = new HttpPost(m_url);
 			verb.addHeader("User-Agent", "occi-client/1.0");
 			verb.addHeader("Content-Type", "text/occi");
-			verb.addHeader("Accept", "*/*");
+			verb.addHeader("Accept", "text/occi");
+			
+			// TODO: Replace with input values
+			String urlEncodedAccount2 = "cGx1Z2Zlc3QyMDEzOnBsdWdmZXN0MjAxMw=="; // plugfest2013
+			verb.addHeader("Authorization", "Basic " + urlEncodedAccount2);
+	        Log.e(TAG,"Authorization: Basic "+ urlEncodedAccount2);
+
 			
 	        //
 	        // Note: For this demo, put OCCI message in header.
@@ -72,8 +129,7 @@ public class CloudComputer {
 	        verb.addHeader("X-OCCI-Attribute", "occi.compute.cores="+ m_Compute.getCores());
 	        verb.addHeader("X-OCCI-Attribute", "occi.compute.state="+ m_Compute.getStatusAsString());						
 
-			//TODO DAVID
-			//USER CREDENTIALS NEED TO BE ADDED
+
 			HttpResponse httpResp = httpclient.execute(verb);			
 			int response = httpResp.getStatusLine().getStatusCode();
 		    if (response == 200 || response == 204 || response == 201) {

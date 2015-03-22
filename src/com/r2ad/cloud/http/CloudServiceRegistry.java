@@ -14,6 +14,10 @@ package com.r2ad.cloud.http;
 
 import java.util.ArrayList;
 
+import com.r2ad.cloud.camp.CAMPService;
+
+import android.util.Log;
+
 public class CloudServiceRegistry {
 	
 	private static ArrayList<String> serviceNames;
@@ -22,18 +26,13 @@ public class CloudServiceRegistry {
 	static {
 		serviceClasses = new ArrayList<String>();
 		serviceNames = new ArrayList<String>();
-		serviceNames.add("Amazon");
-		serviceClasses.add("com.r2ad.cloud.amazon.AmazonService");		
-		serviceNames.add("CDMI");
-		serviceClasses.add("com.r2ad.cloud.cdmi.CDMIService");
-		serviceNames.add("CloudStack");
-		serviceClasses.add("com.r2ad.cloud.cloudstack.CloudStackService");		
-		serviceNames.add("OCCI");
-		serviceClasses.add("com.r2ad.cloud.occi.OCCIService");
-		serviceNames.add("OpenShift");
-		serviceClasses.add("com.r2ad.cloud.openshift.OpenShiftService");		
-		serviceNames.add("Rackspace");
-		serviceClasses.add("com.r2ad.cloud.rackspace.RackspaceService");		
+		registerCloudService("Amazon","com.r2ad.cloud.amazon.AmazonService");
+		registerCloudService("CAMP","com.r2ad.cloud.camp.CAMPService");
+		registerCloudService("CDMI","com.r2ad.cloud.cdmi.CDMIService");
+		registerCloudService("CloudStack","com.r2ad.cloud.cloudstack.CloudStackService");
+		registerCloudService("OCCI","com.r2ad.cloud.occi.OCCIService");
+		registerCloudService("OpenShift","com.r2ad.cloud.openshift.OpenShiftService");
+		registerCloudService("Rackspace","com.r2ad.cloud.rackspace.RackspaceService");
 	}
 	// ****************************************************************
 	// CloudServiceRegistry Methods
@@ -51,10 +50,16 @@ public class CloudServiceRegistry {
 	}
 	
 	public static CloudService generateCloudServiceByIndex(int index) {
+	    Log.d("CS", "Get CloudService by index: " + index);
+	    Log.d("CS", "serviceClasses.get(index): " + serviceClasses.get(index));
+	    Log.d("CS", "generateCloudServiceByClass: " + generateCloudServiceByClass(serviceClasses.get(index)));
+		
 		return generateCloudServiceByClass(serviceClasses.get(index));
 	}	
 	
 	public static CloudService generateCloudServiceByName(String serviceName) {
+	    Log.d("CS", "Get CloudService by name: " + serviceName);
+
 		return generateCloudServiceByClass(serviceClasses.get(serviceNames.indexOf(serviceName)));
 	}	
 	
@@ -62,9 +67,12 @@ public class CloudServiceRegistry {
 		CloudService result = null;
     	try {
     	    result = (CloudService)Class.forName(classname).newInstance();
-    	} catch (ClassNotFoundException oops) {	        		
+    	} catch (ClassNotFoundException oops) {
+    	    Log.d("CS", "ClassNotFoundException: " + classname);    		
     	} catch (InstantiationException nogood) {
+    	    Log.d("CS", "InstantiationException: " + classname);
     	} catch (IllegalAccessException  sucks) {
+    	    Log.d("CS", "IllegalAccessException: " + classname);
     	}		
 		return result;
 	}			

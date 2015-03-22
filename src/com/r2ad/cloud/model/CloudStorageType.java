@@ -13,14 +13,16 @@
 package com.r2ad.cloud.model;
 
 import java.beans.PropertyChangeEvent;
-import java.net.URI;
 import java.util.Date;
+
+import android.util.Log;
 
 import com.r2ad.android.R;
 
 public class CloudStorageType extends CloudLinkType {
 	
     /** Property names fired when a class property is changed (via set) */
+    public static final String TYPE = "Type";
     public static final String STATUS = "Status";
     public static final String SIZE = "Size";
     public static final String ACCESS_TIME = "Access_Time";
@@ -28,9 +30,12 @@ public class CloudStorageType extends CloudLinkType {
     public static final String MODIFIED_TIME = "Modified_Time";
 
     public static enum Status {ONLINE, OFFLINE, DEGRADED}
-    public static String[] StatusString = {"Online", "Offline", "Degraded"};
+    public static String[] TypeString = {"Online", "Offline", "Degraded"};
+    public static enum Type {OBJECT, CONTAINER}
+    public static String[] StatusString = {"object", "container"};
     private float size;
     private Status status;
+    private Type itemType;
     //StoredObject contianedObject;
     private Date createTime;
     private Date modifiedTime;
@@ -47,7 +52,8 @@ public class CloudStorageType extends CloudLinkType {
         this.accessTime = new Date();
         this.createTime = new Date();
         this.modifiedTime = new Date();
-        this.status = Status.OFFLINE;
+        this.status = Status.ONLINE;
+        this.itemType = Type.CONTAINER; 
     }
 
     // ***************************
@@ -55,7 +61,7 @@ public class CloudStorageType extends CloudLinkType {
     // ***************************
     
     public TYPE getType() {
-    	return TYPE.STORAGE;
+    	return com.r2ad.cloud.model.CloudType.TYPE.STORAGE;
     }
     
     // ***************************
@@ -82,10 +88,15 @@ public class CloudStorageType extends CloudLinkType {
         return status;
     }
 
+    public Type getContainerType() {
+        return itemType;
+    }
+    
     public String getStatusAsString() {
         switch (status) {
             case ONLINE: return StatusString[0];
             case OFFLINE: return StatusString[1];
+            case DEGRADED: return StatusString[2];
         }
         return StatusString[2];
     }    
@@ -135,6 +146,13 @@ public class CloudStorageType extends CloudLinkType {
             STATUS, temp, status));
     }
 
+    public void setContainerType(Type itemType) {
+        Type temp = this.itemType;
+        this.itemType = itemType;
+        firePropertyChange(new PropertyChangeEvent(this,
+            TYPE, temp, itemType));
+    }
+
     /*
      * Adds an object to this storage container.
     public void addObject(StoredObject SO) {
@@ -153,30 +171,41 @@ public class CloudStorageType extends CloudLinkType {
      */
 
 	private void determineObjectType(String title) {
-		if (title != null) {
-			int index = getTitle().lastIndexOf(".");
-			if (index > 1 && index < title.length()) {
-				m_leaf = true;
-				String temp = title.substring(index+1, title.length());
-				setIconId(R.drawable.richtext);
-				if (temp.equalsIgnoreCase("html") || temp.endsWith("htm")) {
-					setIconId(R.drawable.html);
-				} else if (temp.equalsIgnoreCase("gif") || temp.endsWith("ico") || 
-				    temp.endsWith("jpg") || temp.endsWith("png") || temp.endsWith("img")) {
-					setIconId(R.drawable.image);
-				} else if (temp.equalsIgnoreCase("pdf")) {
-					setIconId(R.drawable.pdf);
-				} 
-				setSummary("Size " + getSize() + "KB");
-			} else {
-				setIconId(R.drawable.folder);
+		if (title != null) {			
+			// 
+			// Set container type based on ending slash
+			if (title.endsWith("/")) {
+				setContainerType(Type.CONTAINER);
+				setIconId(R.drawable.folder);		
 				setSummary(dateFormat.format(getModifiedTime()));
-			}
+			} else {
+				setContainerType(Type.OBJECT);
+				int index = getTitle().lastIndexOf("."); 				
+				if (index > 1 && index < title.length()) {
+					m_leaf = true;
+					String temp = title.substring(index+1, title.length());
+					setIconId(R.drawable.richtext);
+					if (temp.equalsIgnoreCase("html") || temp.endsWith("htm")) {
+						setIconId(R.drawable.html);
+					} else if (temp.equalsIgnoreCase("gif") || temp.endsWith("ico") || 
+					    temp.endsWith("jpg") || temp.endsWith("png") || temp.endsWith("jpeg") || temp.endsWith("img")) {
+						setIconId(R.drawable.image);
+					} else if (temp.equalsIgnoreCase("pdf")) {
+						setIconId(R.drawable.pdf);
+					} 
+				} else {
+					// Can't figure out what type of file this is. Use a generic file icon.
+					setIconId(R.drawable.generic);
+				}				
+				// Regardless, show file size:
+				setSummary("Size " + getSize() + "KB");
+			}			
+			Log.d("CST", "Item: " + getString());
 		}
 	}    
 	
     public String getString() {
-         return "ID:"+ this.getUID() +", Title:"+ this.getTitle()+", Status:"+ this.getStatus() +", URI:"+ this.getURI();
+         return "ID:"+ this.getUID() +", Title:"+ this.getTitle()+", Type:"+ this.getContainerType() +", URI:"+ this.getURI();
     }	
 
 }

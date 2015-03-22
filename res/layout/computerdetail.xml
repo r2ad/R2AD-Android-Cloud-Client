@@ -1,7 +1,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
     android:id="@+id/view_server_layout"
     android:orientation="vertical"
     android:layout_width="fill_parent"
@@ -120,13 +120,13 @@
     android:textSize="20.0sp"
     android:textColor="#fff"
     />
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_marginTop="10dip"
         >
-        <Button xmlns:android="http://schemas.android.com/apk/res/android"
+        <Button
             android:id="@+id/editcomputerbutton"
             android:text="Modify"
             android:layout_width="130dip"
@@ -136,7 +136,7 @@
             android:layout_marginTop="10dip"
             />
         
-        <Button xmlns:android="http://schemas.android.com/apk/res/android"
+        <Button
             android:id="@+id/deletecomputerbutton"
             android:text="Delete"
             android:layout_width="130dip"

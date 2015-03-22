@@ -27,6 +27,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
 import android.text.method.SingleLineTransformationMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,6 +48,8 @@ public class SettingsActivity extends Activity implements OnItemSelectedListener
     private Spinner serviceSpinner;
     private boolean isNewService;
     private int  servTypeIndex;
+	private static final String TAG = "SettingsActivity";
+
     
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +71,11 @@ public class SettingsActivity extends Activity implements OnItemSelectedListener
 			        textKey.requestFocus();
 			    }	
 			});     
-	        ((TextView) findViewById(R.id.servicetexturl)).setText("http://");
+	        // Set Default:
+	        ((TextView) findViewById(R.id.servicetexturl)).setText("http://globule.scality.com/dewpoint/"); // End in /
+	        ((TextView) findViewById(R.id.servicetexturl)).setText("http://ec2-107-20-16-71.compute-1.amazonaws.com/campSrv/Platform/"); // End in /
+	        ((TextView) findViewById(R.id.serviceUserId)).setText("plugfest2013"); // i.e.: plugfest2013
+	        ((TextView)  findViewById(R.id.serviceAPIKey)).setText("plugfest2013");	        
 	        ((Button) findViewById(R.id.buttonservicelogin)).setOnClickListener(this); 
 	        loadServiceSpinner();
 	        hideActivityIndicators();	        
@@ -76,7 +83,7 @@ public class SettingsActivity extends Activity implements OnItemSelectedListener
 			isNewService = false;
 			setContentView(R.layout.servicesettings);
 			((EditText) findViewById(R.id.serviceNameField)).setText(cs.getName());
-			((TextView) findViewById(R.id.serviceurl)).setText("Local Cloud Host"); //cs.getURL());
+			((TextView) findViewById(R.id.serviceurl)).setText(cs.getURL()); // or use "Local Cloud Host" for demos
 			((TextView) findViewById(R.id.serviceType)).setText(cs.getType());
 			((Button) findViewById(R.id.serviceactionbutton)).setOnClickListener(this); 
 			((Button) findViewById(R.id.servicedeletebutton)).setOnClickListener(new OnClickListener() {
@@ -90,6 +97,8 @@ public class SettingsActivity extends Activity implements OnItemSelectedListener
 	} 
 	
     private void loadServiceSpinner() {
+	    Log.d(TAG, "loadServiceSpinner");
+
     	serviceSpinner = (Spinner) findViewById(R.id.serviceTypeSpinner);
     	serviceSpinner.setOnItemSelectedListener(this);
 		ArrayAdapter<String> serviceAdapter = new ArrayAdapter<String>(this, 
@@ -102,7 +111,11 @@ public class SettingsActivity extends Activity implements OnItemSelectedListener
 	               v = vi.inflate(R.layout.spinnerrow, null);
 	            } 
 	            TextView tv=(TextView) v.findViewById(R.id.spinnerTarget);
+	    	    Log.d(TAG, "spinnerTarget poisition is: " + position);
+
 	            CloudService cs = CloudServiceRegistry.generateCloudServiceByIndex(position);
+	    	    Log.d(TAG, "CloudService is: " + cs);
+
 	            tv.setText(cs.getType());
 	            tv.setTextColor(cs.isAvailable() ? Color.BLACK : Color.LTGRAY);
 	            return v;  
@@ -259,9 +272,15 @@ public class SettingsActivity extends Activity implements OnItemSelectedListener
     
     private void setLoginPreferences() {  
     	CloudService srv = CloudServiceManager.getSelectedService();
-    	String username = ((EditText) findViewById(R.id.serviceUserId)).getText().toString();
-		String userKey = ((EditText) findViewById(R.id.serviceAPIKey)).getText().toString();
-    	srv.setURL(((EditText) findViewById(R.id.servicetexturl)).getText().toString());
+	    Log.d(TAG, "setLoginPreferences, CloudService: " + srv);
+    	
+    	String username = ((EditText) findViewById(R.id.serviceUserId)).getText().toString().trim();
+		String userKey = ((EditText) findViewById(R.id.serviceAPIKey)).getText().toString().trim();
+	    Log.d(TAG, "setLoginPreferences, username: " + username);
+	    Log.d(TAG, "setLoginPreferences, userKey: " + userKey);
+	    Log.d(TAG, "setLoginPreferences, servicetexturl: " + userKey);
+
+    	srv.setURL(((EditText) findViewById(R.id.servicetexturl)).getText().toString().trim());
     	srv.setAccount(new CloudAccount(username, userKey));
     }    
 	

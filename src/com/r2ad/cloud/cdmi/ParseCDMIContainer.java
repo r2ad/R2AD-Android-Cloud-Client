@@ -12,6 +12,8 @@
  */
 package com.r2ad.cloud.cdmi;
 
+// Codehaus dependency: http://wiki.fasterxml.com/JacksonDownload
+
 import java.io.InputStream;
 import java.io.IOException;
 
@@ -27,9 +29,29 @@ import android.util.Log;
 public class ParseCDMIContainer {
 
 	private static final String TAG = "ParseCDMIContainer";
-    static ObjectMapper mapper = new ObjectMapper(); // can reuse, share globally
+    static ObjectMapper mapper; // can reuse, share globally
     static JsonFactory factory = new JsonFactory();
 
+    public static ObjectMapper getMapper() {
+    	if ( mapper == null ) {
+		    Log.d(TAG, "Creating JSON ObjectMapper ");
+    		mapper = new ObjectMapper(); // can reuse, share globally;
+    	}
+    	return mapper;
+    }
+    
+
+    public static JsonFactory getJSONFactory() {
+    	if ( factory == null ) {
+    		factory = new JsonFactory();
+    	}
+    	return factory;
+    }
+    
+    /* 
+     * Given the results of a query, determine the children of this container.
+     * These will then be displayed later.
+     */
     public static String[] parseStorage(InputStream instream, String url) {
 		ArrayList<String> items = new ArrayList<String>();
 		//
@@ -45,7 +67,7 @@ public class ParseCDMIContainer {
 
 	   	try {
             JsonParser jp = null;
-            jp = factory.createJsonParser(instream);
+            jp = getJSONFactory().createJsonParser(instream);
 
             JsonToken token;
             token = jp.nextToken(); // move to value, or START_OBJECT/START_ARRAY
@@ -71,14 +93,14 @@ public class ParseCDMIContainer {
 					 items.add(line);
 					 //
 					 // TBD - Query metadata for this on a separate thread
-					 // Then check if this is a file/object or another container.
-					 // Set icon appropriately						 
+					 // Store metadata with the internal CloudStorage Type and make it accessible via a button.
 				}					
 				token = jp.nextToken(); // move to value, or START_OBJECT/START_ARRAY
             }
             
             // Now process the collected items and return an array:
 		    Log.d(TAG, "Found this many items: " + items.size());	            
+		    Log.d(TAG, "Process Children?  " + children);	            
 			result = new String[items.size()];
 			items.toArray(result);
 	    } catch (IOException e) {

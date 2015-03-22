@@ -25,9 +25,9 @@ import com.r2ad.cloud.model.CloudTypeMap;
 
 public class CDMIService extends CloudServiceAdapter {
 
-	public static final String[] CAPABILITES_HDR = {"Accept", "application/cdmi-capability", "X-CDMI-Specification-Version", "1.0.1"};	
-	public static final String[] CONTAINER_HDR = {"Accept", "application/cdmi-container", "X-CDMI-Specification-Version", "1.0.1"};	
-	public static final String[] OBJECT_HDR = {"Accept", "application/cdmi-object", "X-CDMI-Specification-Version", "1.0.1"};
+	public static final String[] CAPABILITES_HDR = {"Accept", "*/*", "X-CDMI-Specification-Version", "1.0.2"};	// spec requires: application/cdmi-capability
+	public static final String[] CONTAINER_HDR = {"Accept", "application/cdmi-container", "X-CDMI-Specification-Version", "1.0.2"};	
+	public static final String[] OBJECT_HDR = {"Accept", "application/cdmi-object", "X-CDMI-Specification-Version", "1.0.2"};
 		
 	private static final String TAG = "CDMIService";
 	private static final String TYPE = "CDMI";
@@ -87,11 +87,21 @@ public class CDMIService extends CloudServiceAdapter {
 	private void retrieveCapabilities() {	
 		HEADERS = CAPABILITES_HDR;
 		String childrenURL = getURL();
-		if (childrenURL.endsWith("/")) {
-			childrenURL += "cdmi_capabilities";
-		} else {
-			childrenURL += "/cdmi_capabilities";
+		/** 
+		 * Not sure if this is causing URL issues...
+		 * 		
+		 */		  
+		if (  childrenURL.indexOf("cdmi_capabilities") == 0 ) {
+			if (childrenURL.endsWith("/")) {
+				childrenURL += "cdmi_capabilities";
+			} else {
+				childrenURL += "/cdmi_capabilities";
+			}
+			Log.d(TAG, "retrieveCapabilities Adding cdmi_capabilies to url");
+
 		}
+		Log.d(TAG, "retrieveCapabilities Chilren URL: "+ childrenURL);
+
 		HttpResponse httpResp = getResponse(childrenURL);
 		if (httpResp != null) {
 		    Log.d(TAG, "Protocol Version: "+ httpResp.getProtocolVersion());
@@ -106,10 +116,11 @@ public class CDMIService extends CloudServiceAdapter {
 			}
 			if (children != null) {
                 for (int i = 0; i < children.length; i++) {   
-                	Log.d(TAG, "Capability " + children[i]);
-                	//CloudStorageType temp = new CloudStorageType();
-                	//temp.setTitle(children[i]);
-                	//CloudTypeMap.add(this, temp);
+                	Log.d(TAG, "Adding Item: " + children[i]);
+                	// Not sure why these lines where commented out - I put them back into service - Sept2013 Plugfest:
+                	CloudStorageType temp = new CloudStorageType();
+                	temp.setTitle(children[i]);
+                	CloudTypeMap.add(this, temp);
                 }	
 			}
 		}		
@@ -123,6 +134,8 @@ public class CDMIService extends CloudServiceAdapter {
 		} else {
 			childrenURL += "/?children";
 		}
+		Log.d(TAG, "retrieveChildren Children URL: "+ childrenURL);
+
 		HttpResponse httpResp = getResponse(childrenURL);
 		if (httpResp != null) {
 		    Log.d(TAG, "Protocol Version: "+ httpResp.getProtocolVersion());
@@ -133,15 +146,21 @@ public class CDMIService extends CloudServiceAdapter {
 			try {
 			    InputStream stream = httpResp.getEntity().getContent();
 			    children = ParseCDMIContainer.parseStorage(stream, childrenURL);
-			} catch (IOException oops) {				
+			} catch (IOException oops) {		
+				Log.d(TAG, "IO Exception processing children stream");
 			}
 			if (children != null) {
                 for (int i = 0; i < children.length; i++) {   
                 	CloudStorageType temp = new CloudStorageType();
                 	temp.setTitle(children[i]);
                 	CloudTypeMap.add(this, temp);
+            		Log.d(TAG, "Adding Child: "+ childrenURL);
+
                 }	
+			} else {
+				Log.d(TAG, "No children present");
 			}
+				
 		}		
 	}				
 

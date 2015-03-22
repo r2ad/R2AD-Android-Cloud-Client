@@ -19,8 +19,8 @@ import java.util.Date;
 public interface CloudService {
 	
 	public static final String UTF8 = "UTF-8";
-	public static final String HTTP = "http://";
-	public static final String HTTPS = "https://";
+	public static final String HTTPPrefix = "http://";
+	public static final String HTTPSPrefix = "https://";
 	public static final long NO_ID = -999;
 		
 	public CloudAction[] getActions();

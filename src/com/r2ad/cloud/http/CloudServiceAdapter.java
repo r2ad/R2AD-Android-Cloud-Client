@@ -12,7 +12,10 @@
  */
 package com.r2ad.cloud.http;
 
+import android.content.Context;
 import android.util.Log;
+
+import java.security.KeyStore;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -20,13 +23,26 @@ import java.util.Date;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpVersion;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.conn.ClientConnectionManager;
+import org.apache.http.conn.scheme.PlainSocketFactory;
+import org.apache.http.conn.scheme.Scheme;
+import org.apache.http.conn.scheme.SchemeRegistry;
+import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpParams;
+import org.apache.http.params.HttpProtocolParams;
+import org.apache.http.protocol.HTTP;
 
 import com.r2ad.cloud.actions.CloudAction;
 import com.r2ad.security.utils.Encoder;
+import com.r2ad.security.utils.MySSLSocketFactory;
 
 public abstract class CloudServiceAdapter implements CloudService {
 	
@@ -38,6 +54,15 @@ public abstract class CloudServiceAdapter implements CloudService {
 	private CloudAccount			m_account;
 	private Date					m_accessed;		
 	private ArrayList<CloudAction> 	m_actions;
+	private HttpClient httpclient = null;
+	
+	// Extra values that may or may not be needed:
+	static final String keystoreFilename = "keystore.android";
+	KeyStore trustStore = null;
+	SSLSocketFactory socketFactory = null;
+	Context context = null;
+	static final String urlEncodedAccount = "YWNjb3JkczpwbGF0Zm9ybQ=="; // accords:platform
+	
 	
 	// *******************************************************
 	// Implement the CloudService Interface
@@ -92,8 +117,10 @@ public abstract class CloudServiceAdapter implements CloudService {
 	
 	@Override
 	public void setURL(String url) {
-		if (url != null && !url.startsWith(HTTP)) {
-			url = HTTP + url;
+		if (url != null) {
+			if (!url.toLowerCase().startsWith("http")) {
+				url = HTTPPrefix + url;				
+		    }
 		}		
 		this.m_url = url;
 	}
@@ -105,7 +132,7 @@ public abstract class CloudServiceAdapter implements CloudService {
 	
 	@Override
 	public String toString() {
-		return getType() + " " + getName() + " " + getURL();
+		return "CSA:" + getType() + " " + getName(); // add if verbose on:  + " " + getURL()
 	}	
 	
 	// *******************************************************
@@ -134,21 +161,72 @@ public abstract class CloudServiceAdapter implements CloudService {
 		}
 		return result;		
 	}
+
+    public HttpClient getNewHttpClient() {
+    	//
+    	//TODO: consider a singleton
+    	// http://stackoverflow.com/questions/10174004/how-to-use-one-httpclient-per-application
+    	//
+        //if ( httpclient != null) {
+	        try {
+	            KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
+	            trustStore.load(null, null);
 	
+	            SSLSocketFactory sf = new MySSLSocketFactory(trustStore);
+	            sf.setHostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
+	
+	            HttpParams params = new BasicHttpParams();
+	            HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
+	            HttpProtocolParams.setContentCharset(params, org.apache.http.protocol.HTTP.UTF_8);
+	
+	            SchemeRegistry registry = new SchemeRegistry();
+	            registry.register(new Scheme("http", PlainSocketFactory.getSocketFactory(), 80));
+	            registry.register(new Scheme("https", sf, 443));
+	            registry.register(new Scheme("https", sf, 8094));
+
+	            ClientConnectionManager ccm = new ThreadSafeClientConnManager(params, registry);
+	
+	            httpclient = new DefaultHttpClient(ccm, params);
+	        } catch (Exception e) {
+	        	httpclient =  new DefaultHttpClient();
+	        }
+        //};
+        return httpclient;
+    }
+    
 	protected HttpResponse getResponse(String url) {
 		HttpResponse result = null;
-		try {			
-			DefaultHttpClient httpclient = new DefaultHttpClient();
+	    Log.d(toString(), "getResponse:  " + url );
+		
+		try {
+			// Old way:
+			//DefaultHttpClient httpclient = new DefaultHttpClient();
+			// New way to support CO test site:
+			//
+			HttpClient httpclient = getNewHttpClient();
+			HttpGet get = generateHeader(url);
+			
 			String username = getAccount().getUsername();			
 			if (username != null && username.length() > 0) {
-			    httpclient.getCredentialsProvider().setCredentials(new AuthScope(null, -1),
-                    new UsernamePasswordCredentials(username, getAccount().getUserToken()));
-			    Log.d(toString(), "Using Credentials " + username + " " + getAccount().getUserToken());
+				// old way:
+			    //httpclient.getCredentialsProvider().setCredentials(new AuthScope(null, -1),
+                //    new UsernamePasswordCredentials(username, getAccount().getUserToken()));
+			    //
+				// consider THIS TODO: http://hc.apache.org/httpclient-3.x/authentication.html
+				//UsernamePasswordCredentials credentials = new UsernamePasswordCredentials(username, getAccount().getUserToken());
+				String urlEncodedAccount2 = "cGx1Z2Zlc3QyMDEzOnBsdWdmZXN0MjAxMw=="; // plugfest2013:plugfest2013
+
+				get.addHeader("Authorization", "Basic " + urlEncodedAccount2);
+				get.addHeader("Accept", "occi/text");
+
+			    Log.d(toString(), "Username:  " + getAccount().getUsername() );
+			    Log.d(toString(), "Password:  " + getAccount().getUserToken() );
+			    urlEncodedAccount2 = Encoder.Base64Encode(username + ":" + getAccount().getUserToken());
+			    Log.d(toString(), "encoded value (test using on-line decoder) : " + urlEncodedAccount2);
 			} 
-			HttpGet get = generateHeader(url);
 			HttpResponse httpResp = httpclient.execute(get);			
 			int response = httpResp.getStatusLine().getStatusCode();
-			Log.d(toString(), url + " HttpResponse is " + response);
+			Log.d(toString(), "getResponse: HttpResponse is " + response + " for URL:" + url);
 		    if (response == 200 || response == 204) {
 		    	result = httpResp;
 		    } 
@@ -159,6 +237,7 @@ public abstract class CloudServiceAdapter implements CloudService {
 	
 	protected HttpResponse getAuthResponse(String url) {
 		HttpResponse result = null;
+		Log.d(toString(), "getAuthResponse testing URL: " + url);
 	    //var digestedPassPhrase = Encoder.sign("{connection.credentials}");
 	    //var credentials64 = Base64.encode("{connection.user}:{digestedPassPhrase}".getBytes());
 	    //var rubyAuthHeader = HttpHeader {
@@ -166,24 +245,28 @@ public abstract class CloudServiceAdapter implements CloudService {
 	    //       value:"Basic {credentials64}"
 	    //   };	 		
 		try {			
-			DefaultHttpClient httpclient = new DefaultHttpClient();
+			//OLD: DefaultHttpClient httpclient = new DefaultHttpClient();
+			HttpClient httpclient = getNewHttpClient();
+			
 			HttpGet get = generateHeader(url);
 			String username = getAccount().getUsername();			
 			if (username != null && username.length() > 0) {
-				// We might need to digest (hash) the password:
-			    String digestedCredentials=username + ":" + Encoder.sign(getAccount().getUserToken());
-			    String credentials=username + ":" + getAccount().getUserToken();
-	            String credentials64 = Base64.encodeBase64String(credentials.getBytes());
-	            // Add the encoded credentials to the header:
-	            get.addHeader("Authorization", "Basic " + credentials64);
-	            Log.d(toString(), "Authorization header is: " + credentials64);
-			    httpclient.getCredentialsProvider().setCredentials(new AuthScope(null, -1),
-                    new UsernamePasswordCredentials(username, getAccount().getUserToken()));
+			    String urlEncodedAccount2 = Encoder.Base64Encode(username + ":" + getAccount().getUserToken());
+
+				get.addHeader("Authorization", "Basic " + urlEncodedAccount2);
+
+	            //
+			    // httpclient.getCredentialsProvider().setCredentials(new AuthScope(null, -1),
+                //    new UsernamePasswordCredentials(username, getAccount().getUserToken()));
 			    Log.d(toString(), "Using Credentials " + username + " " + getAccount().getUserToken());
+			    Log.d(toString(), "Basic Auth encoding: " + urlEncodedAccount2);
+			    
+			    
 			} 
 			HttpResponse httpResp = httpclient.execute(get);			
 			int response = httpResp.getStatusLine().getStatusCode();
-			Log.d(toString(), url + " HttpResponse is " + response);
+			Log.d(toString(), "URL is: " + url);
+			Log.d(toString(), url + " HttpResponse code: " + response);
 		    if (response == 200 || response == 204) {
 		    	result = httpResp;
 		    } 

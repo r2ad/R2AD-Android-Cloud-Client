@@ -18,8 +18,8 @@ public class CloudAccount {
 	private String userToken;
 
 	public CloudAccount(String username, String userToken) {
-		this.username = username;
-		this.userToken = userToken;
+		this.username = username.trim();
+		this.userToken = userToken.trim();
 	}	
 	
 	/**

@@ -6,6 +6,7 @@ import com.r2ad.cloud.model.CloudStorageType;
 import com.r2ad.cloud.model.CloudTypeMap;
 
 import android.app.Activity;
+import android.util.Log;
 import android.view.View.OnClickListener;
 import android.content.Intent;
 import android.graphics.Color;
@@ -21,7 +22,8 @@ public class StorageDetailActivity extends Activity implements OnClickListener {
 	
 	private CloudService m_CloudService;
 	private CloudStorageType m_Storage;
-	
+	private static final String TAG = "StorageDetail";
+
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,10 +37,12 @@ public class StorageDetailActivity extends Activity implements OnClickListener {
         if (m_Storage != null) {
             loadServerData();
         } 
-        ((Button) findViewById(R.id.storageactionbutton)).setOnClickListener(this);
+        ((Button) findViewById(R.id.stopbutton)).setOnClickListener(this);
     }       
    
     private void loadServerData() {
+	    Log.d(TAG, "Loading Server Data for Storage");
+    	
     	TextView name = (TextView) findViewById(R.id.view_storage_name);
     	if (name != null) name.setText(m_Storage.getTitle());
     	

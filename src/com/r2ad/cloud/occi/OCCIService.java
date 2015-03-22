@@ -27,7 +27,8 @@ import com.r2ad.cloud.model.CloudTypeMap;
 public class OCCIService extends CloudServiceAdapter {
 	
 	public static final String[] OCCI_HEADERS = {"User-Agent", "occi-client/1.0", 
-		"Content-Type", "text/occi", "Accept", "*/*"};		
+		"Content-Type", "text/occi", "Accept", "text/occi"};		
+	// Changed accept to text/occi, june 2013 for CO.
 	public static final String TAG = "OCCIService";
 	private static final String TYPE = "OCCI";
 	private boolean m_retrieved = false;

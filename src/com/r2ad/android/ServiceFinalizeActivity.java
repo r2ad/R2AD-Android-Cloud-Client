@@ -17,6 +17,7 @@ import com.r2ad.cloud.http.CloudServiceManager;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -53,8 +54,10 @@ public class ServiceFinalizeActivity extends Activity {
 	
     public void saveService() {
     	CloudService srv = CloudServiceManager.getSelectedService();
-    	String name = ((EditText) findViewById(R.id.finalservicenamefield)).getText().toString();
+    	String name = ((EditText) findViewById(R.id.finalservicenamefield)).getText().toString().trim();
     	srv.setName(name);
+		Log.d("SFA", "- saveService name: " + name);
+
     	CloudServiceManager.addService(srv);
 		setResult(Activity.RESULT_OK);
 		finish();

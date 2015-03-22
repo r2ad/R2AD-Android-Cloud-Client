@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Cloud Client for Android</string>
+    <string name="app_name">R2AD Teleclient</string>
     <string name="menu_add_service">Add Service</string>
     <string name="menu_delete_service">Delete Service</string>
     <string name="authenticating">Authenticating Login</string>
-    <string name="login">Ok</string>
+    <string name="login">@android:string/ok</string>
     <string name="service_url">Service URL:</string>
     <string name="show_credentials">Show Key</string>
     <string name="username">User Name:</string>
@@ -24,5 +24,14 @@
     <string name="preference_name">Preferences</string>
     <string name="servicetype">Service Target</string>
     <string name="cancelbutton">Cancel</string>
-    <string name="nextbutton">Next</string>	
+    <string name="storageName">Storage Name</string>
+    <string name="size">Size</string>
+    <string name="storageActions">Storage Actions</string>
+    <string name="state">State</string>
+    <string name="summary">Summary</string>	
+    <string name="nextbutton">Next</string>
+    <string name="resourceName">Resource Name</string>
+    <string name="description">Description</string>
+    <string name="parameters">Parameters</string>
+    <string name="stopButton">Stop</string>
 </resources>
